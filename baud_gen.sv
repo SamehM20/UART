@@ -5,11 +5,6 @@ module baud_gen (
     output logic tick
 );
 
-// TODO: move notify call to TOP level
-initial begin
-    notify_baud();
-end
-
 logic [baud_calc-1:0] baud_freq;    // Value of the clk cycles per tick.
 logic [baud_calc-1:0] baud_count;   // Internal counter.
 
@@ -22,7 +17,8 @@ always_comb begin : selecting_baud_freq
     endcase
 end
 
-always_ff @(posedge clk or negedge reset_n) begin : blockName
+// Generating the baud tick.
+always_ff @(posedge clk or negedge reset_n) begin 
     if(!reset_n) begin 
         baud_count <= 0;
         tick <= 0;
