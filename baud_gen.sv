@@ -10,10 +10,10 @@ logic [baud_calc-1:0] baud_count;   // Internal counter.
 
 always_comb begin : selecting_baud_freq
     unique case (bd_rate)
-        0:  baud_freq = baud_tick_1200 /2;   // Baud Rate of 1200. 
-        1:  baud_freq = baud_tick_2400 /2;   // Baud Rate of 2400. 
-        2:  baud_freq = baud_tick_4800 /2;   // Baud Rate of 4800. 
-        3:  baud_freq = baud_tick_9600 /2;   // Baud Rate of 9600. 
+        0:  baud_freq = baud_tick_1 /2;   
+        1:  baud_freq = baud_tick_2 /2;   
+        2:  baud_freq = baud_tick_3 /2;   
+        3:  baud_freq = baud_tick_4 /2;   
     endcase
 end
 
