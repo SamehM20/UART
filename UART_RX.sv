@@ -12,9 +12,7 @@ logic int_tick, done, registered;
 logic end_bit;
 enum logic [1:0] {IDLE, DATA, PARITY, EOSTREAM} state, next;
 
-// TODO: move the function call to the TOP Level.
-initial notify_receiver();
-
+// Controlling the Oversampling.
 always_ff @(posedge tick, negedge reset_n) begin
     if(!reset_n) begin
         state <= IDLE;
@@ -34,6 +32,8 @@ always_ff @(posedge tick, negedge reset_n) begin
         endcase
     end
 end
+ 
+// Controlling the states changes.
 always_ff @(posedge int_tick, negedge reset_n) begin
     if(!reset_n) begin
         stream_out <= 0;
@@ -46,6 +46,8 @@ always_ff @(posedge int_tick, negedge reset_n) begin
         else state_count++;   
     end
 end
+    
+// Next state managing and data capture.
 always_comb begin
     case (state)
         IDLE: begin 
@@ -81,6 +83,8 @@ always_comb begin
         end
     endcase
 end
+    
+// Errors generation.
 always_ff @(posedge tick, negedge reset_n) begin
     if(!reset_n) begin 
         registered <= 0;
